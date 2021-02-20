@@ -47,6 +47,7 @@ class Film(models.Model):
     release_year = models.IntegerField(verbose_name='Год релиза')
     duration = models.DecimalField(max_digits=3, decimal_places=2, verbose_name='Продолжительность')
     url = models.URLField(max_length=300, verbose_name='Ссылка')
+    image = models.ImageField(upload_to='images/%Y/%m/%d/', verbose_name='Изображние', null=True)
 
     def __str__(self):
         return f'{self.title} {self.genre} {self.release_year}'
