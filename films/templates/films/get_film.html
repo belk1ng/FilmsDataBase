@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="card mb-2">  
+        
+        <div class="card-header">
+            Жанр: <a href="{{ film.genre.get_absolute_url }}">{{ film.genre }}</a>
+        </div>
+        
+        <div class="card-body">
+            <div class="media">
+                <img src="{{ film.image.url }}" class="mr-3" width="320" >
+                
+                <div class="media-body mt-2">
+                    <h5 class="card-title">{{ film.title }}</h5>
+                    <p class="card-text">{{ film.annotation }}</p>
+                
+                <div class="media-body mt-2">
+                    <p>Режиссёры:</p>
+                        <ul>
+                        {% for dir in directors %}
+                            <li>{{ dir.director }}</li>
+                        {% endfor %}
+                        </ul>
+                    <p>Актёры: 
+                        <ul>
+                        {% for actor in actors %}
+                            <li>{{ actor.actor }}</li>
+                        {% endfor %}
+                        </ul>
+                    </p>
+                    <p>Награды: {{ film.awards }}</p>
+                </div>
+
+                </div>
+                
+                <div class="mt-3"> 
+                    <a href="{{ film.url }}"><button type="button" class="btn btn-primary btn-sm">Смотреть</button></a>
+                </div>
+
+            </div>
+        </div>
+        
+        <div class="card-footer text-muted">
+            Дата выпуска: {{ film.release_year }} год
+        </div>
+
+    </div>
+{% endblock %}

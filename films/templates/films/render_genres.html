@@ -1,5 +1,5 @@
 <ul class="list-group">
 	{% for genre in genres %}
-		<li class="list-group-item"><a href='#'>{{ genre.genre }}</a></li> <!-- Отображаем все жанры -->
+		<li class="list-group-item"><a href='{{ genre.get_absolute_url }}'>{{ genre.genre }}</a></li> <!-- Отображаем все жанры -->
 	{% endfor%}
 </ul>

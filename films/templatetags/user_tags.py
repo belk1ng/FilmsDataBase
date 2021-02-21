@@ -1,6 +1,7 @@
 from django import template
 from films.models import *
 
+
 register = template.Library()  # Регаем теги
 
 

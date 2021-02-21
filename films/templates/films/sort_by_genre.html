@@ -5,7 +5,7 @@
     {% for film in films %}
          <div class="card mb-2">  <!-- Отображаем карточки с фильмами -->
             <div class="card-header">
-                Жанр: <a href="{{ film.genre.get_absolute_url }}">{{ film.genre }}</a>
+                Жанр: <a href="#">{{ film.genre }}</a>
             </div>
             <div class="card-body">
                 <div class="media">
@@ -15,19 +15,15 @@
                         <h5 class="card-title">{{ film.title }}</h5>
                         <p class="card-text">{{ film.annotation }}</p>
                     </div>
-                    
                     <div class="mt-2"> 
                         <a href="{{ film.url }}"><button type="button" class="btn btn-primary btn-sm">Смотреть</button></a>
-                        <a href="{{ film.get_absolute_url }}"><button type="button" class="btn btn-primary btn-sm">Подробнее</button></a>
+                        <a href="{{ film.get_absolute_url }}"><button type="button" class="btn btn-primary btn-sm">Подробнее</button>
                     </div>
-
                 </div>
             </div>
-            
             <div class="card-footer text-muted">
-                Дата выпуска: {{ film.release_year }} год
+                Дата выпуска: <a href="#">{{ film.release_year }} год</a>
             </div>
-
         </div>
     {% endfor %}
 {% endblock %}
