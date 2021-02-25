@@ -13,7 +13,7 @@
                     
                     <div class="media-body mt-2">
                         <h5 class="card-title">{{ film.title }}</h5>
-                        <p class="card-text">{{ film.annotation }}</p>
+                        <p class="card-text">{{ film.annotation|truncatewords:50 }}</p>
                     </div>
                     
                     <div class="mt-2"> 

@@ -46,11 +46,11 @@ class Film(models.Model):
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, verbose_name='Жанр')
     directors = models.ManyToManyField(Director, verbose_name='Режиссёры')
     actors = models.ManyToManyField(Actor, verbose_name='Актёры')
-    annotation = models.CharField(max_length=1000, verbose_name='Аннотация')
+    annotation = models.CharField(max_length=5000, verbose_name='Аннотация')
     awards = models.CharField(max_length=1000, verbose_name='Награды')
     release_year = models.IntegerField(verbose_name='Год релиза')
     duration = models.DecimalField(max_digits=3, decimal_places=2, verbose_name='Продолжительность')
-    url = models.URLField(max_length=300, verbose_name='Ссылка')
+    url = models.URLField(max_length=500, verbose_name='Ссылка')
     image = models.ImageField(upload_to='images/%Y/%m/%d/', verbose_name='Изображние', null=True)
 
     def __str__(self):

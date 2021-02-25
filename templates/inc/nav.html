@@ -11,8 +11,8 @@
                         <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Главная</a>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search">
+                <form class="d-flex" action="{% url 'search_films' %}">
+                    <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search" name="films_search">
                     <button class="btn btn-outline-success" type="submit">Поиск</button>
                 </form>
             </div>

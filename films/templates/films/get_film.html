@@ -25,12 +25,13 @@
                         </ul>
                     <p>Актёры: 
                         <ul>
-                        {% for actor in actors %}
-                            <li>{{ actor.actor }}</li>
+                        {% for film_actor in actors %}
+                            <li>{{ film_actor.actor }}</li>
                         {% endfor %}
                         </ul>
                     </p>
                     <p>Награды: {{ film.awards }}</p>
+                    <p>Продолжительность: {{ film.duration }} часа</p>
                 </div>
 
                 </div>
