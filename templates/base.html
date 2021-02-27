@@ -23,8 +23,49 @@
             </div>
 
             <div class="col-md-9">
+                {% block header %}
+                {% endblock %}
+
                 {% block content %}
                 {% endblock %}
+
+                {% if page_obj.has_other_pages %}  <!-- Если существует сколько-то страниц - отображаем, иначе - нет-->
+
+                    <nav aria-label="...">        <!-- Пагинация -->
+                        <ul class="pagination mt-3">
+                            
+                            
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Предыдушая</a>
+                                </li>
+                            {% endif %}
+
+                            {% for page_number in paginator.page_range %}  <!-- Для каждой страницы в диапазоне всех существующих -->
+
+                                {% if page_obj.number == page_number %}   <!-- Если страница пагинатора равна номеру страницы в нумерации - подсвечиваем синим --> 
+
+                                    <li class="page-item active"><a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a></li>
+
+                                {% elif  page_number > page_obj.number|add:-3 and page_number < page_obj.number|add:3 %}  <!-- Выводим по 2 страницы справа и слева от текущей -->
+
+                                    <li class="page-item"><a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a></li>
+
+                                {% endif %}
+
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a>
+                                </li>
+                            {% endif %}
+
+                        </ul>
+                    </nav>
+
+                {% endif %}
+
             </div>
         </div>
     </div>

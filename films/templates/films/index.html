@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 
 
+{% block header %}
+
+    <h3>Главная страница: </h3>
+
+{% endblock %}
+
 {% block content %}
     {% for film in films %}
-         <div class="card mb-2">  <!-- Отображаем карточки с фильмами -->
+         <div class="card mt-3">  <!-- Отображаем карточки с фильмами -->
             <div class="card-header">
                 Жанр: <a href="{{ film.genre.get_absolute_url }}">{{ film.genre }}</a>
             </div>
@@ -30,4 +36,5 @@
 
         </div>
     {% endfor %}
+
 {% endblock %}

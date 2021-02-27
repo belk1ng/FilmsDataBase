@@ -2,19 +2,32 @@ from django.shortcuts import render
 from .models import *
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class MainPage(ListView):
     template_name = 'films/index.html'
     context_object_name = 'films'
+    paginate_by = 2
 
     def get_queryset(self):
-        return Film.objects.raw('SELECT * FROM films_film ORDER BY id DESC')  # Достаём данные на главную страницу
+        films = Film.objects.raw('SELECT * FROM films_film ORDER BY id DESC')  # Достаём данные на главную страницу
+
+        return films
+
+
 
 
 class SortByGenre(ListView):  # Страница для фильмов с сортировкой по жанру
     template_name = 'films/sort_by_genre.html'
     context_object_name = 'films'
+    paginate_by = 2
+
+    def get_context_data(self, **kwargs):
+        context = super(SortByGenre, self).get_context_data(**kwargs)
+        context['cur_genre'] = Genre.objects.get(pk=self.kwargs['genre_id'])
+
+        return context
 
     def get_queryset(self):  # Достаём сортированные по жанру фильмы
             return Film.objects.raw('''SELECT * FROM films_film
@@ -48,18 +61,23 @@ class SearchFilms(ListView):
     context_object_name = 'films'
     template_name = 'films/search.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(SearchFilms, self).get_context_data(**kwargs)
+        context['header'] = self.request.GET.get('films_search')
+
+        return context
+
     def get_queryset(self):
         query = self.request.GET.get('films_search')  # Получаем запрос из формы
 
-        films = Film.objects.filter(Q(title__icontains=query) |
+        return Film.objects.filter(Q(title__icontains=query) |
                                     Q(genre__genre__icontains=query) |
                                     Q(annotation__icontains=query) |
-                                    Q(release_year__icontains=query) |
                                     Q(actors__actor__icontains=query)|
-                                    Q(directors__director__icontains=query)
-                                    )  # Получаем данные по запросу с помощью ORM (sql-запрос очень сложный, поэтому упрощаем задачу)
+                                    Q(directors__director__icontains=query) |
+                                    Q(release_year__icontains=query)
+                                    ).distinct()  # Получаем данные по запросу с помощью ORM (sql-запрос очень сложный, поэтому упрощаем задачу)
 
-        return films
 
 
 

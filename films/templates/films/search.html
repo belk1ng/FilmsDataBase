@@ -1,33 +1,51 @@
 {% extends 'base.html' %}
 
 
+{% block header %}
+
+    <h3>Результаты поиска по запросу "{{ header }}":</h3>
+
+{% endblock %}
+
 {% block content %}
-{% for film in films.distinct %}  <!-- В запросе есть повторы, поэтому рассматриваем только уникальные фильмы -->
-         <div class="card mb-2">  <!-- Отображаем карточки с фильмами -->
-            <div class="card-header">
-                Жанр: <a href="{{ film.genre.get_absolute_url }}">{{ film.genre }}</a>
-            </div>
-            <div class="card-body">
-                <div class="media">
-                    <img src="{{ film.image.url }}" class="mr-3" width="320" >
-                    
-                    <div class="media-body mt-2">
-                        <h5 class="card-title">{{ film.title }}</h5>
-                        <p class="card-text">{{ film.annotation|truncatewords:50 }}</p>
-                    </div>
-                    
-                    <div class="mt-2"> 
-                        <a href="{{ film.url }}"><button type="button" class="btn btn-primary btn-sm">Смотреть</button></a>
-                        <a href="{{ film.get_absolute_url }}"><button type="button" class="btn btn-primary btn-sm">Подробнее</button></a>
-                    </div>
-
+    
+    {% if films %}
+        
+        <h3>Найдено {{ films.count }} совпадения(е)!</h3>
+        
+        {% for film in films %}  <!-- В запросе есть повторы, поэтому рассматриваем только уникальные фильмы -->
+             <div class="card mt-3">  <!-- Отображаем карточки с фильмами -->
+                <div class="card-header">
+                    Жанр: <a href="{{ film.genre.get_absolute_url }}">{{ film.genre }}</a>
                 </div>
-            </div>
-            
-            <div class="card-footer text-muted">
-                Дата выпуска: {{ film.release_year }} год
-            </div>
+                <div class="card-body">
+                    <div class="media">
+                        <img src="{{ film.image.url }}" class="mr-3" width="320" >
+                        
+                        <div class="media-body mt-2">
+                            <h5 class="card-title">{{ film.title }}</h5>
+                            <p class="card-text">{{ film.annotation|truncatewords:50 }}</p>
+                        </div>
+                        
+                        <div class="mt-2"> 
+                            <a href="{{ film.url }}"><button type="button" class="btn btn-primary btn-sm">Смотреть</button></a>
+                            <a href="{{ film.get_absolute_url }}"><button type="button" class="btn btn-primary btn-sm">Подробнее</button></a>
+                        </div>
 
-        </div>
-    {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="card-footer text-muted">
+                    Дата выпуска: {{ film.release_year }} год
+                </div>
+
+            </div>
+        {% endfor %}
+    
+    {% else %}
+
+        <h3>По вашему запросу ничего не найдено!</h3>
+
+    {% endif %}
+
 {% endblock %}
